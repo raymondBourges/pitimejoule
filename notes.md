@@ -27,4 +27,3 @@
     ```
     sudo update-alternatives --install /usr/local/bin/pgadmin pgadmin /usr/pgadmin4/bin/pgadmin4 0
     ```
-* 

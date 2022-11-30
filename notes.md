@@ -12,17 +12,10 @@
 
 ## Promscale
 * doc https://docs.timescale.com/promscale/latest/
-  * en plus 
-    ```
-    echo "shared_preload_libraries = 'timescaledb'" >> /etc/postgresql/14/main/postgresql.conf
-    ```
-* conf dans /etc/postgresql/14/main/
-  * maintenu sous git pour modifs (user notamment)
-    * puis 
-      ```
-      CREATE ROLE rbo WITH LOGIN PASSWORD 'rbo';
-      ```
+* start via
+
 ### Notes
+* docker-compose inspiré de https://github.com/timescale/promscale/blob/master/docker-compose/docker-compose.yaml et de https://docs.timescale.com/install/latest/installation-docker/ pour la partie timescaledb
 * connexion de secours via 
   ```
   sudo su postgres -c 'psql'

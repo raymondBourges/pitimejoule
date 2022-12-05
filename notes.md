@@ -1,3 +1,14 @@
+## Promscale
+* doc https://docs.timescale.com/promscale/latest/
+
+### Notes
+* docker-compose inspiré de https://github.com/timescale/promscale/blob/master/docker-compose/docker-compose.yaml et de https://docs.timescale.com/install/latest/installation-docker/ pour la partie timescaledb
+* Le docker compose contient notamment :
+  * Promscale
+  * Prometheus
+  * Grafana
+  * node exporteur (avec une conf pour lire les informations sur la machine hôte)
+
 ## Prometheus
 * doc https://prometheus.io/docs/introduction/overview/
 * conf dans prometheus.yml
@@ -9,21 +20,12 @@
 * conf dans grafana.ini
 * data dans /var/lib/grafana
 * accès via http://localhost:3000
-
-## Promscale
-* doc https://docs.timescale.com/promscale/latest/
-* start via
-
-### Notes
-* docker-compose inspiré de https://github.com/timescale/promscale/blob/master/docker-compose/docker-compose.yaml et de https://docs.timescale.com/install/latest/installation-docker/ pour la partie timescaledb
-* connexion de secours via 
-  ```
-  sudo su postgres -c 'psql'
-  ```
+* Complément de configuration via l'IHM de grafana
+  * Ajout d'une datasource de type prometheus mais branchée sur Promscale via http://promscale:9201
 
 ## pgadmin
-* doc sudo apt install pgadmin4-desktop
-  * en plus 
+* Installation via :
     ```
+    sudo apt install pgadmin4-desktop
     sudo update-alternatives --install /usr/local/bin/pgadmin pgadmin /usr/pgadmin4/bin/pgadmin4 0
     ```

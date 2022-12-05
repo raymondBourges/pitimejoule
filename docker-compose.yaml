@@ -45,3 +45,13 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     expose:
       - 9100
+
+  prometheus:
+    image: prom/prometheus:latest
+    depends_on:
+     - promscale
+     - node-exporter
+    ports:
+      - 9090:9090/tcp
+    volumes:
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml      

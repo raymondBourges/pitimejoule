@@ -2,7 +2,7 @@
 * doc https://prometheus.io/docs/introduction/overview/
 * conf dans /etc/prometheus/prometheus.yml
 * data dans /var/lib/prometheus/metrics2/
-* accès via http://localhost:9090/classic/graph
+* accès via http://localhost:9090/
 
 ## Grafana
 * doc https://grafana.com/docs/grafana/latest/

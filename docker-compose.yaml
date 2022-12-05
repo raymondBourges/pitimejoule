@@ -13,7 +13,7 @@ services:
       TSTUNE_PROFILE: promscale
 
   promscale:
-    image: timescale/promscale:latest
+    image: timescale/promscale:0.16
     ports:
       - 9201:9201/tcp
       - 9202:9202/tcp
@@ -29,10 +29,9 @@ services:
       PROMSCALE_METRICS_RULES_CONFIG_FILE: /prometheus.yml
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.5.0
     ports:
       - 9100:9100
-    container_name: node-exporter
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
@@ -47,7 +46,7 @@ services:
       - 9100
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.40.5
     depends_on:
      - promscale
      - node-exporter
@@ -57,15 +56,16 @@ services:
       - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml     
 
   alertmanager:
-    image: prom/alertmanager:latest
+    image: prom/alertmanager:v0.24.0
     ports:
       - 9093:9093/tcp
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:9.3.1
+    depends_on:
+      - promscale
     ports:
       - 3000:3000
-    container_name: grafana
     volumes:
       - /var/lib/grafana:/var/lib/grafana
       - /var/log/grafana:/var/log/grafana

@@ -1,12 +1,12 @@
 ## Prometheus
 * doc https://prometheus.io/docs/introduction/overview/
-* conf dans /etc/prometheus/prometheus.yml
-* data dans /var/lib/prometheus/metrics2/
+* conf dans prometheus.yml
+* data dans /var/lib/prometheu
 * accès via http://localhost:9090/
 
 ## Grafana
 * doc https://grafana.com/docs/grafana/latest/
-* conf dans /etc/grafana/grafana.ini
+* conf dans grafana.ini
 * data dans /var/lib/grafana
 * accès via http://localhost:3000
 

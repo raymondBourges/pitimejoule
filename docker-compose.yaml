@@ -28,3 +28,20 @@ services:
       PROMSCALE_DB_URI: postgres://postgres:password@db:5432/postgres?sslmode=allow
       PROMSCALE_METRICS_RULES_CONFIG_FILE: /prometheus.yml
 
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - 9100:9100
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100

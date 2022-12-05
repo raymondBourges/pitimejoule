@@ -54,4 +54,9 @@ services:
     ports:
       - 9090:9090/tcp
     volumes:
-      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml      
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml     
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - 9093:9093/tcp

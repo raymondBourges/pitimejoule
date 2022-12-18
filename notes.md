@@ -29,3 +29,5 @@
     sudo apt install pgadmin4-desktop
     sudo update-alternatives --install /usr/local/bin/pgadmin pgadmin /usr/pgadmin4/bin/pgadmin4 0
     ```
+## FastAPI
+* doc https://fastapi.tiangolo.com/fr/

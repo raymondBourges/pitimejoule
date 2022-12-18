@@ -2,3 +2,5 @@ tmp/
 backup/
 **/__pycache__/
 *~
+fastapi/app/url.py
+fastapi/app/infoclimat.py

@@ -31,3 +31,7 @@
     ```
 ## FastAPI
 * doc https://fastapi.tiangolo.com/fr/
+
+## Etcd
+* doc https://etcd.io/docs/
+* récupération de ~/.local/bin/etcdctl et etcdutl depuis zip dans https://github.com/etcd-io/etcd/releases/

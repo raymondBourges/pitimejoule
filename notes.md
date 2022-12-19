@@ -31,6 +31,11 @@
     ```
 ## FastAPI
 * doc https://fastapi.tiangolo.com/fr/
+* run 
+```
+cd fastapi/app
+uvicorn main:app --reload
+```
 
 ## Etcd
 * doc https://etcd.io/docs/

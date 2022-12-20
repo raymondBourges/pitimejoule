@@ -35,8 +35,8 @@
 ```
 export ETCD_HOST=localhost
 export ETCD_PORT=2379
-cd fastapi/app
-uvicorn main:app --reload
+cd fastapi
+uvicorn app.main:app --port 8001 --reload
 ```
 
 ## Etcd

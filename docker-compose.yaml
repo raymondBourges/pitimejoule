@@ -114,3 +114,13 @@ services:
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
     ports:
       - "2379:2379/tcp"
+
+  pytimejoule:
+    image: pytimejoule
+    depends_on:
+      - etcd
+    environment:
+      ETCD_HOST: "etcd"
+    ports:
+      - 8000:80
+  

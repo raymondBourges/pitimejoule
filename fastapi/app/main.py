@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Response
-import requests
-import infoclimat as infoclimat
+import requests, os
 import etcd3 # pip install etcd3 + pip install protobuf==3.20
 
 app = FastAPI()
@@ -26,7 +25,7 @@ def buildUrlApiMeteo(station, token):
 
 def getTokenApiMeteo():
     #lecture du token depuis la base ETCD
-    etcd = etcd3.client('127.0.0.1', 2379)
+    etcd = etcd3.client(os.environ['ETCD_HOST'], os.environ['ETCD_PORT'])
     return etcd.get("/fastapi/tokenApiMeteo")[0].decode('utf-8')
 
 def getMetaDataStationMeteo():

@@ -33,6 +33,8 @@
 * doc https://fastapi.tiangolo.com/fr/
 * run 
 ```
+export ETCD_HOST=localhost
+export ETCD_PORT=2379
 cd fastapi/app
 uvicorn main:app --reload
 ```

@@ -124,3 +124,13 @@ services:
     ports:
       - 8000:80
   
+  web:
+    image: nginx:1.23
+    restart: always
+    volumes:
+      - ./ngnix_conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./ngnix_content:/usr/share/nginx/html:ro
+    ports:
+      - "9081:80/tcp"
+    environment:
+      - NGINX_PORT=80

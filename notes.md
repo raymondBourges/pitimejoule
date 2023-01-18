@@ -14,6 +14,8 @@
 * conf dans prometheus.yml
 * data dans /var/lib/prometheu
 * accès via http://localhost:9090/
+* notes
+  * https://prometheus.io/docs/concepts/jobs_instances/ --> The up time series is useful for instance availability monitoring
 
 ## Grafana
 * doc https://grafana.com/docs/grafana/latest/

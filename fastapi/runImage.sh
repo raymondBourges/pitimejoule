@@ -1,1 +1,0 @@
-docker run --name pytimejoule --rm -p 80:80 pytimejoule

@@ -1,5 +1,0 @@
-uvicorn
-etcd3
-fastapi
-requests
-protobuf==3.20

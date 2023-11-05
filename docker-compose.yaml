@@ -1,35 +1,8 @@
 version: '3.0'
 
 services:
-  db:
-    image: timescale/timescaledb-ha:pg14-latest
-    ports:
-      - 127.0.0.1:5432:5432/tcp
-    volumes:
-      - /var/data/timescaledb/:/home/postgres/pgdata/data
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
-      TSTUNE_PROFILE: promscale
-
-  promscale:
-    image: timescale/promscale:0.16
-    ports:
-      - 9201:9201/tcp
-      - 9202:9202/tcp
-    restart: on-failure
-    depends_on:
-      - db
-    volumes:
-      - ${PWD}/promscale_prometheus.yml:/prometheus.yml
-      - ${PWD}/rules.yml:/rules.yml
-      - ${PWD}/alerts.yml:/alerts.yml
-    environment:
-      PROMSCALE_DB_URI: postgres://postgres:password@db:5432/postgres?sslmode=allow
-      PROMSCALE_METRICS_RULES_CONFIG_FILE: /prometheus.yml
-
   node-exporter:
-    image: prom/node-exporter:v1.5.0
+    image: prom/node-exporter:v1.6.1
     ports:
       - 9100:9100
     restart: unless-stopped
@@ -46,29 +19,22 @@ services:
       - 9100
 
   prometheus:
-    image: prom/prometheus:v2.40.5
+    image: prom/prometheus:v2.47.2
     depends_on:
-     - promscale
      - node-exporter
     ports:
       - 9090:9090/tcp
     volumes:
+      - /pitimejoule/prometheus/data:/data
       - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml     
 
-  alertmanager:
-    image: prom/alertmanager:v0.24.0
-    ports:
-      - 9093:9093/tcp
-
   grafana:
-    image: grafana/grafana:9.3.1
-    depends_on:
-      - promscale
+    image: grafana/grafana:10.1.2
     ports:
       - 3000:3000
     volumes:
-      - /var/lib/grafana:/var/lib/grafana
-      - /var/log/grafana:/var/log/grafana
+      - /pitimejoule/grafana/lib:/var/lib/grafana
+      - /pitimejoule/grafana/log:/var/log/grafana
       - ${PWD}/grafana.ini:/etc/grafana/grafana.ini
     environment:
       - GF_SECURITY_ADMIN_USER=admin
@@ -77,60 +43,3 @@ services:
     restart: unless-stopped
     expose:
       - 3000
-
-  apisix-dashboard:
-    image: apache/apisix-dashboard:2.15.0-alpine
-    restart: always
-    volumes:
-    - ./apisix-dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
-    ports:
-    - "9000:9000"
-
-  apisix:
-    image: apache/apisix:3.0.0-debian
-    restart: always
-    volumes:
-      - ./apisix_log:/usr/local/apisix/logs
-      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    ##network_mode: host
-    ports:
-      - "9180:9180/tcp"
-      - "9080:9080/tcp"
-      - "9091:9091/tcp"
-      - "9443:9443/tcp"
-      - "9092:9092/tcp"
-
-  etcd:
-    image: bitnami/etcd:3.4.15
-    restart: always
-    volumes:
-      - ./etcd_data:/bitnami/etcd/data
-    environment:
-      ETCD_ENABLE_V2: "true"
-      ALLOW_NONE_AUTHENTICATION: "yes"
-      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
-      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
-    ports:
-      - "2379:2379/tcp"
-
-  pytimejoule:
-    image: pytimejoule
-    depends_on:
-      - etcd
-    environment:
-      ETCD_HOST: "etcd"
-    ports:
-      - 8000:80
-  
-  web:
-    image: nginx:1.23
-    restart: always
-    volumes:
-      - ./ngnix_conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./ngnix_content:/usr/share/nginx/html:ro
-    ports:
-      - "9081:80/tcp"
-    environment:
-      - NGINX_PORT=80

@@ -6,3 +6,4 @@ fastapi/app/url.py
 fastapi/app/infoclimat.py
 etcd_data/
 apisix_log/
+grafana.ini

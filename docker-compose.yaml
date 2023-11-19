@@ -20,13 +20,17 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.47.2
+    command:
+      - "--storage.tsdb.path=/data/"
+      # - "--web.external-url=https://maison.arbi.fr/prometheus/" 
+      - "--config.file=/etc/prometheus/prometheus.yml"
     depends_on:
-     - node-exporter
+      - node-exporter
     ports:
       - 9090:9090/tcp
     volumes:
       - /pitimejoule/prometheus/data:/data
-      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml  
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
